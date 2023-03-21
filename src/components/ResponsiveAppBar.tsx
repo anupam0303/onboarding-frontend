@@ -61,7 +61,7 @@ export function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            VAISALA
+            <img src="/Vaisala_logo.png" height={20} alt="logo"></img>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

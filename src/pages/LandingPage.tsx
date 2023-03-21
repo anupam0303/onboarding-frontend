@@ -7,30 +7,30 @@ export function LandingPage() {
   const auth = useAuth();
 
   const cards = [
-    <ActionAreaCard
+    (<ActionAreaCard
       cardName="Onboard a New Customer"
       cardImage="/onboard.jpg"
       cardAlt="Onboarding"
       navLink="/onboarding"
-    />,
-    <ActionAreaCard
+    />),
+    (<ActionAreaCard
       cardName="My Tasks"
       cardImage="/tasks.png"
       cardAlt="Tasks"
       navLink="/tasks"
-    />,
-    <ActionAreaCard
+    />),
+    (<ActionAreaCard
       cardName="Check Status"
       cardImage="/status.jpg"
       cardAlt="Status"
       navLink="/status"
-    />,
-    <ActionAreaCard
+    />),
+    (<ActionAreaCard
       cardName="Teams"
       cardImage="/teams.jpg"
       cardAlt="Teams"
       navLink="/teams "
-    />,
+    />),
   ];
   if (auth.isLoading) {
     return <Box />;

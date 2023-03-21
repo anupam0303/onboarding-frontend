@@ -25,7 +25,7 @@ const  getInitialState= (stateName: string) => {
 const  getInitialAdmins= (): string[] => {
   const localCustomer = window.localStorage.getItem('onboarding:customer')
   if (localCustomer!=null) {
-    return JSON.parse(localCustomer).admin
+    return JSON.parse(localCustomer).adminUsers
   }
   else {
     return []
@@ -35,11 +35,11 @@ const  getInitialAdmins= (): string[] => {
 
 
 export function CustomerForm() {
-  const [name, setName] = React.useState(getInitialState('name'));
-  const [admin, setAdmin] = React.useState(getInitialAdmins());
-  const [product, setProduct] = React.useState(getInitialState('product'));
+  const [customerName, setName] = React.useState(getInitialState('customerName'));
+  const [adminUsers, setAdmin] = React.useState(getInitialAdmins());
+  const [productName, setProduct] = React.useState(getInitialState('productName'));
   const [tier, setTier] = React.useState(getInitialState('tier'));
-  const [region, setRegion] = React.useState(getInitialState('region'));
+  const [customerRegion, setRegion] = React.useState(getInitialState('customerRegion'));
 
   const handleChange = (event: SelectChangeEvent) => {
     setProduct(event.target.value);
@@ -63,14 +63,14 @@ export function CustomerForm() {
 
   React.useEffect(() => {
     const customerInfo = {
-      name,
-      admin,
-      product,
+      customerName,
+      adminUsers,
+      productName,
       tier,
-      region
+      customerRegion
     }
     window.localStorage.setItem("onboarding:customer", JSON.stringify(customerInfo));
-  }, [admin, name, product, region, tier]);
+  }, [adminUsers, customerName, customerRegion, productName, tier]);
 
 
   return (
@@ -88,7 +88,7 @@ export function CustomerForm() {
             fullWidth
             autoComplete="TestCompany Oyj"
             variant="standard"
-            defaultValue={name}
+            defaultValue={customerName}
             onChange={handleName}
           />
         </Grid>
@@ -100,7 +100,7 @@ export function CustomerForm() {
             fullWidth
             autoComplete="admin@testoyj.com"
             variant="standard"
-            defaultValue={admin}
+            defaultValue={adminUsers? adminUsers.toString():""}
             onChange={handleAdmin}
           />
         </Grid>
@@ -110,14 +110,14 @@ export function CustomerForm() {
             <Select
               labelId="product-label"
               id="products"
-              value={product}
+              value={productName}
               onChange={handleChange}
               label="Product"
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"wxh"}>Wx Horizon</MenuItem>
+              <MenuItem value={"WxHorizon"}>WxHorizon</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -134,8 +134,8 @@ export function CustomerForm() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"pro"}>Pro</MenuItem>
-              <MenuItem value={"premium"}>Premium</MenuItem>
+              <MenuItem value={"Pro"}>Pro</MenuItem>
+              <MenuItem value={"Premium"}>Premium</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -145,15 +145,15 @@ export function CustomerForm() {
             <Select
               labelId="region-label"
               id="region"
-              value={region}
+              value={customerRegion}
               onChange={handleRegion}
               label="Customer Region"
             >
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"eu-central-1"}>Frankfurt</MenuItem>
-              <MenuItem value={"us-east-1"}>N. Virginia</MenuItem>
+              <MenuItem value={"Northern Virginia"}>Northern Virginia</MenuItem>
+              <MenuItem value={"Frankfurt"}>Frankfurt</MenuItem>
             </Select>
           </FormControl>
         </Grid>

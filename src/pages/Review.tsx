@@ -6,11 +6,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 
 type Customer = {
-  name: string;
-  product: string;
+  customerName: string;
+  productName: string;
   tier: string;
-  region: string;
-  admin: string[];
+  customerRegion: string;
+  adminUsers: string[];
 };
 
 type Devices = {
@@ -18,37 +18,50 @@ type Devices = {
   deviceSerial: string
 }
 
-let localCustomer: Customer = {
-  name: "",
-  product: "",
+const localCustomerInit: Customer = {
+  customerName: "",
+  productName: "",
   tier: "",
-  region: "",
-  admin: [],
+  customerRegion: "",
+  adminUsers: [],
 };
-let localDevices: Devices[] =[{
+const localDevicesInit: Devices[] =[{
   deviceType: "",
   deviceSerial: ""
 }];
 
-const getDevices = () => {
+const getDevices = ():Devices[] => {
   const devicesFromLocalStore = window.localStorage.getItem("onboarding:devices");
   if(devicesFromLocalStore) {
-    localDevices= JSON.parse(devicesFromLocalStore).devices;
+    return(JSON.parse(devicesFromLocalStore).devices);
+    //console.log("localDevices:", localDevices)
+  }
+  else{
+    return localDevicesInit;
   }
 }
 
-const getInitialState = () => {
+const getInitialState = ():Customer => {
   const customerFromLocalStore = window.localStorage.getItem("onboarding:customer");
   if(customerFromLocalStore) {
-    localCustomer= JSON.parse(customerFromLocalStore);
+    return(JSON.parse(customerFromLocalStore));
+    //console.log("localCustomer:", localCustomer)
   }
-  getDevices();
+  else {
+    return localCustomerInit;
+  }
+  //getDevices();
 };
 
-const customerInfoArr: string[]= Object.keys(localCustomer).filter((key)=> key!=="admin");
 
 export function Review() {
+  const [localCustomer, setlocalCustomer] = React.useState(getInitialState());
+  const [localDevices, setlocalDevices] = React.useState(getDevices());
+  
+  const customerInfoArr: string[]= Object.keys(localCustomer).filter((key)=> key!=="admin");
+
   React.useEffect(() => {
+    console.log("Getting initial state for review")
     getInitialState();
   });
 
